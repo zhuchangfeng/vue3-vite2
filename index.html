@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="<%- BASE_URL %>favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%- title %></title>
+  <!-- 使用CDN的CSS文件 -->
+  <% cdn&&cdn.css.forEach(function(css){ %>
+  <link rel="stylesheet" href="<%- css %>" />
+  <% }); %>
+  <!-- 使用CDN的JS文件 -->
+  <% cdn&&cdn.js.forEach(function(js){ %>
+  <script type="text/javascript" src="<%- js%>"></script>
+  <% }); %>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<![endif]-->
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
