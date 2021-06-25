@@ -1,8 +1,8 @@
 # vue3-vite2
 this is a vite with vue3 composition-api
-#install
+# install
 yarn 
-#dev
+# dev
 yarn dev
-#build
+# build
 yarn build
