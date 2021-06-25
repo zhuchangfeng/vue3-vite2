@@ -12,7 +12,7 @@ export default defineConfig({
   // 部署应用包时的基本 URL
   base: BASE_URL,
   root: process.cwd(),
-  // 输出文件目录
+  // 输出文件目录 dist
   outDir: 'dist',
   // 作为静态资源服务的文件夹
   publicDir: 'public',
