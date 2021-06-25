@@ -13,7 +13,7 @@ export default defineConfig({
   base: BASE_URL,
   root: process.cwd(),
   // 输出文件目录
-  outDir: 'dis',
+  outDir: 'dist',
   // 作为静态资源服务的文件夹
   publicDir: 'public',
   // 文件别名
