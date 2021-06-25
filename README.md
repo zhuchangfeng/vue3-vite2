@@ -1,8 +1,25 @@
 # vue3-vite2
 this is a vite with vue3 composition-api
-# install
+## Project setup
+```
 yarn 
-# dev
+```
+### Compiles and hot-reloads for development
+```
 yarn dev
-# build
+```
+### Compiles and minifies for production
+```
 yarn build
+```
+
+### Lints and fixes files
+```
+yarn lint
+```
+### vite 
+see [view][https://vitejs.cn/]
+
+### vue3
+see [view][https://vue3js.cn/docs/zh/].
+
