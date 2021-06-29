@@ -30,12 +30,14 @@ export default defineConfig({
   server: {
     port: 8080, // 配置端口
     open: true, // 自动开启浏览器
-    '/api': {
-      target: 'http://127.0.0.1:8888',
-      changeOrigin: true,
-      secure: false,
-      // ws: true, // 是否启用websockets
-      // rewrite: (path) => path.replace(/^\/bins/, '')
+    proxy: {
+      '/upload': {
+        target: 'http://127.0.0.1:8888',
+        changeOrigin: true,
+        secure: false,
+        // ws: true, // 是否启用websockets
+        // rewrite: (path) => path.replace(/^\/bins/, '')
+      },
     },
   },
   build: {
