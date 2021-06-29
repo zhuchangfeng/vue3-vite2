@@ -1,8 +1,6 @@
 import axios from 'axios';
 // import qs from 'qs';
-import { AxiosCanceler } from './axiosCancel';
-import { interceptorsCatch, interceptorsResponse } from '../axios/transform';
-// 是否为IE9
+import { interceptorsCatch, interceptorsResponse, interceptorsRequest } from '../axios/transform';
 export class Axios {
   constructor(options) {
     this.options = options;
@@ -53,23 +51,12 @@ export class Axios {
   }
   // 拦截器设置
   setupInterceptors() {
-    const axiosCanceler = new AxiosCanceler();
     this.axiosInstance.interceptors.request.use((config) => {
-      const {
-        headers: { ignoreCancelToken },
-      } = config;
-      // 检查ignoreCancel是否存在？存在赋值，不存在去配置找
-      const ignoreCancel =
-        typeof ignoreCancelToken === 'undefined'
-          ? this.options?.request?.ignoreCancelToken
-          : ignoreCancelToken;
-      !ignoreCancel && axiosCanceler.addPending(config);
-      return config;
+      return interceptorsRequest(config);
     });
 
     this.axiosInstance.interceptors.response.use(
       (res) => {
-        res && axiosCanceler.removeAllPending(res.config);
         return interceptorsResponse(res);
       },
       (error) => {
