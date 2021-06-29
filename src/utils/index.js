@@ -1,3 +1,4 @@
+import { isObject } from './is';
 const typer = Object.prototype.toString;
 /**
  * @param {value} 待检查的值
@@ -27,4 +28,11 @@ export function uniq(arr) {
     }
   }
   return result;
+}
+
+export function deepMerge(src = {}, target = {}) {
+  for (let key in target) {
+    src[key] = isObject(src[key]) ? deepMerge(src[key], target[key]) : target[key];
+  }
+  return src;
 }
