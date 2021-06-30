@@ -27,7 +27,7 @@ export const uniq = (arr) => {
   return result;
 };
 /**
- * @description 对象深程合并
+ * @description 对象深层合并
  */
 export function deepMerge(src = {}, target = {}) {
   for (let key in target) {
