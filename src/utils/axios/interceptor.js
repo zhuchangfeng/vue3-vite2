@@ -9,7 +9,7 @@ export const interceptorsResponse = (res) => {
 export const interceptorsCatch = (error) => {
   const { response, code, message } = error || {};
   const msg = response?.data?.msg ?? '';
-  console.log(response, msg);
+  console.log(error.response, msg);
   const err = error?.toString?.() ?? '';
   let errMessage = '';
   try {
@@ -19,7 +19,6 @@ export const interceptorsCatch = (error) => {
     if (err?.includes('Network Error')) {
       errMessage = 'Network Error';
     }
-
     if (errMessage) {
       return Promise.reject(error);
     }
