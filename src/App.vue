@@ -6,6 +6,8 @@
     <input name="file" type="file" accept=".png" @change="changfn" />
   </button>
   <router-view />
+  <router-view />
+  <router-view />
 </template>
 
 <script>
@@ -30,11 +32,10 @@
         console.log(msg);
       };
       onMounted(() => {
-        console.log(root.value);
-        new To(1000).scrollTo();
+        new To(1000, 500).scrollTo();
         for (let index = 0; index < 3; index++) {
           createAxios()
-            .axiosInstance({
+            .get({
               url: '/upload/info',
             })
             .then((r) => {
