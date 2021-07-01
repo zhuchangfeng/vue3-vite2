@@ -18,6 +18,12 @@ export const createAxios = (option = {}) => {
         // `responseType` 表示服务器响应的数据类型，可以是 'arraybuffer', 'blob', 'document', 'json', 'text', 'stream'
         responseType: 'json', // default
         // urlPrefix: '/api',
+        transform: {
+          // 处理请求数据
+          request: true,
+          // 请求之前处理
+          beforeRequest: true,
+        },
       },
       option
     )
