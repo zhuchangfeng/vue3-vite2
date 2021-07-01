@@ -9,7 +9,7 @@ export const interceptorsResponse = (res) => {
 export const interceptorsCatch = (error) => {
   const { response, code, message } = error || {};
   const msg = response?.data?.msg ?? '';
-  console.log(error.response, msg);
+  console.log(msg);
   const err = error?.toString?.() ?? '';
   let errMessage = '';
   try {

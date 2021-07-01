@@ -1,6 +1,7 @@
 import axios from 'axios';
-// import qs from 'qs';
-import { interceptorsCatch, interceptorsResponse, interceptorsRequest } from '../axios/transform';
+import { interceptorsCatch, interceptorsResponse, interceptorsRequest } from './interceptor';
+import { transformBeforeRequest, transformRequest } from './transform';
+import { cloneLoop } from '../index';
 export class Axios {
   constructor(options) {
     this.options = options;
@@ -12,7 +13,7 @@ export class Axios {
     if (!this.axiosInstance) return;
     Object.assign(this.axiosInstance.defaults.headers, headers);
   }
-  // 获取拦截器参数
+  // 获取转换器参数
   getTransform() {
     const { transform } = this.options;
     return transform;
@@ -64,5 +65,28 @@ export class Axios {
         return interceptorsCatch(error);
       }
     );
+  }
+  get(config, options) {
+    return this.request({ ...config, method: 'GET' }, options);
+  }
+  post(config, options) {
+    return this.request({ ...config, method: 'POST' }, options);
+  }
+  request(config, options) {
+    let conf = cloneLoop(config);
+    let opt = Object.assign({}, options);
+    const { request, beforeRequest } = this.getTransform();
+    request && (conf = transformBeforeRequest(conf, opt));
+    return new Promise((resolve, reject) => {
+      this.axiosInstance
+        .request(conf)
+        .then((res) => {
+          beforeRequest && transformRequest(res);
+          resolve(res);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
   }
 }
