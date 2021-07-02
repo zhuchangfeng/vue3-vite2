@@ -5,6 +5,17 @@
     我要激活
     <input name="file" type="file" accept=".png" @change="changfn" />
   </button>
+  <div
+    id="dropArea"
+    ref="dropArea"
+    @dragleave.prevent.stop="dragleave"
+    @dragenter.prevent.stop="dragenter"
+    @drop.prevent.stop="drop"
+    @dragover.prevent.stop="dragover"
+  >
+    <p>拖拽上传文件</p>
+    <div id="imagePreview" ref="imagePreview"></div>
+  </div>
   <router-view />
   <router-view />
   <router-view />
@@ -15,12 +26,16 @@
   import { reactive, toRef, toRefs, ref, onMounted } from 'vue';
   import To from '@/utils/scroll-to';
   import { createAxios } from '@/utils/axios/index';
+  import { addClass, removeClass } from '@/utils/dom';
+  import { throttle } from '@/utils/index';
   export default {
     name: 'App',
     components: { HelloWorld },
     setup(props, context) {
       console.log(context);
       const root = ref(null);
+      const dropArea = ref(null);
+      const imagePreview = ref(null);
       const value = ref('');
       const msg = ref('hello world!');
       const state = reactive({ count: 0 });
@@ -30,18 +45,42 @@
       const increase = () => state.count++;
       const tell = (msg) => {
         console.log(msg);
+        createAxios()
+          .get({
+            url: '/upload',
+          })
+          .then((r) => {
+            console.log(r);
+          });
       };
-      onMounted(() => {
-        new To(1000, 500).scrollTo();
-        for (let index = 0; index < 3; index++) {
-          createAxios()
-            .get({
-              url: '/upload/info',
-            })
-            .then((r) => {
-              console.log(r);
-            });
+      const dragleave = () => {
+        console.log('dragleave');
+        removeClass(dropArea.value, 'highlighted');
+      };
+      const dragenter = () => {
+        console.log('dragenter');
+        addClass(dropArea.value, 'highlighted');
+      };
+      const drop = (e) => {
+        console.log(e.dataTransfer.files);
+        const fifles = e.dataTransfer.files;
+        if (fifles.length) {
+          console.log(fifles);
+          addClass(dropArea.value, 'highlighted');
+        } else {
+          removeClass(dropArea.value, 'highlighted');
         }
+      };
+      const dragover = throttle(
+        () => {
+          console.log('dragover');
+          addClass(dropArea.value, 'highlighted');
+        },
+        500,
+        { leading: true, trailing: false }
+      );
+      onMounted(() => {
+        new To(0, 500).scrollTo();
       });
       const changfn = (e) => {
         console.log(e);
@@ -59,12 +98,40 @@
         msg,
         tell,
         changfn,
+        imagePreview,
+        dropArea,
+        dragleave,
+        dragenter,
+        drop,
+        dragover,
       };
     },
   };
 </script>
 
 <style lang="scss" scoped>
+  #dropArea {
+    width: 300px;
+    height: 300px;
+    border: 1px dashed gray;
+    margin-bottom: 20px;
+    p {
+      text-align: center;
+      color: #999;
+    }
+    &.highlighted {
+      background-color: #ddd;
+    }
+  }
+  #imagePreview {
+    max-height: 250px;
+    overflow-y: scroll;
+    img {
+      width: 100%;
+      display: block;
+      margin: auto;
+    }
+  }
   .btn {
     display: inline-block;
     line-height: 1;
