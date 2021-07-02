@@ -21,7 +21,6 @@ export const transformBeforeRequest = (config, options) => {
       config.params = null;
     }
   }
-
   return config;
 };
 
