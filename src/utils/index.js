@@ -118,7 +118,9 @@ export const debounce = (fuc, wait) => {
   };
   return debounce;
 };
-
+/**
+ * @description 节流 options leading 代表首次是否执行，trailing 代表结束后是否再执行一次
+ */
 export const throttle = (func, wait, options) => {
   var timeout, context, args;
   var previous = 0;
