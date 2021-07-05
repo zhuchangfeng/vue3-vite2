@@ -14,10 +14,16 @@
     @dragover.prevent.stop="dragover"
   >
     <p>拖拽上传文件</p>
-    <div id="imagePreview" ref="imagePreview"></div>
   </div>
-  <router-view />
-  <router-view />
+  <div id="imagePreview">
+    <img
+      :src="reader.src"
+      :alt="reader.name"
+      name="view"
+      v-for="(reader, index) in fileReader"
+      :key="'reader' + index"
+    />
+  </div>
   <router-view />
 </template>
 
@@ -35,7 +41,6 @@
       console.log(context);
       const root = ref(null);
       const dropArea = ref(null);
-      const imagePreview = ref(null);
       const value = ref('');
       const msg = ref('hello world!');
       const state = reactive({ count: 0 });
@@ -43,15 +48,9 @@
       const state2 = reactive({ count2: 0 });
       const stateAsRefs = toRefs(state2);
       const increase = () => state.count++;
+      const fileReader = reactive([]);
       const tell = (msg) => {
         console.log(msg);
-        createAxios()
-          .get({
-            url: '/upload',
-          })
-          .then((r) => {
-            console.log(r);
-          });
       };
       const dragleave = () => {
         console.log('dragleave');
@@ -66,6 +65,10 @@
         const fifles = e.dataTransfer.files;
         if (fifles.length) {
           console.log(fifles);
+          const files = [...fifles];
+          files.forEach((file) => {
+            previewImage(file);
+          });
           addClass(dropArea.value, 'highlighted');
         } else {
           removeClass(dropArea.value, 'highlighted');
@@ -79,8 +82,34 @@
         500,
         { leading: true, trailing: false }
       );
+      const previewImage = (file) => {
+        const IMAGE_MIME_REGEX = /^image\/(jpe?g|gif|png)$/i;
+        if (IMAGE_MIME_REGEX.test(file.type)) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            if (!fileReader.some((v) => v.src == e.target.result)) {
+              fileReader.push({ src: e.target.result, name: file.name });
+              console.log(file);
+              createAxios()
+                .uploadFile({ url: '/upload' }, { file: file, name: 'upload', filename: file.name })
+                .then((r) => {
+                  console.log(r);
+                });
+            }
+          };
+          reader.readAsDataURL(file);
+        }
+      };
       onMounted(() => {
         new To(0, 500).scrollTo();
+        createAxios({ responseData: 'default', headers: { ignoreCancelToken: true } })
+          .get({
+            url: '/uploads/album/detail',
+            params: '/22',
+          })
+          .then((r) => {
+            console.log(r);
+          });
       });
       const changfn = (e) => {
         console.log(e);
@@ -98,12 +127,12 @@
         msg,
         tell,
         changfn,
-        imagePreview,
         dropArea,
         dragleave,
         dragenter,
         drop,
         dragover,
+        fileReader,
       };
     },
   };
@@ -125,11 +154,12 @@
   }
   #imagePreview {
     max-height: 250px;
-    overflow-y: scroll;
+    overflow-x: scroll;
+    text-align: left;
     img {
-      width: 100%;
-      display: block;
-      margin: auto;
+      width: 80px;
+      display: inline-block;
+      height: 80px;
     }
   }
   .btn {
