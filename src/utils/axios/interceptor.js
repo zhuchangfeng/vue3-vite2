@@ -8,9 +8,10 @@ export const interceptorsResponse = (res) => {
 // 请求后失败
 export const interceptorsCatch = (error) => {
   const { response, code, message } = error || {};
-  const msg = response?.data?.msg ?? '';
-  console.log(msg);
+  console.log(response);
+  const msg = response?.data?.msg ?? response?.statusText;
   const err = error?.toString?.() ?? '';
+  console.log(msg, err);
   let errMessage = '';
   try {
     if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {

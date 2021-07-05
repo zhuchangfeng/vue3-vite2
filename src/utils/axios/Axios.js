@@ -62,7 +62,6 @@ export class Axios {
         return interceptorsResponse(res);
       },
       (error) => {
-        console.log(error);
         return interceptorsCatch(error);
       }
     );
@@ -73,6 +72,7 @@ export class Axios {
   post(config, options) {
     return this.request({ ...config, method: 'POST' }, options);
   }
+  // 说明这里不支持设置头部，头部可以使用setHeader函数或者在实例Axios的时候传入
   request(config, options) {
     let conf = cloneLoop(config);
     let opt = Object.assign({}, this.options, options);
