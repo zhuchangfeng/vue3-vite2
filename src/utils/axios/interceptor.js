@@ -31,14 +31,9 @@ export const interceptorsCatch = (error) => {
 export const interceptorsRequest = (config) => {
   const {
     headers: { ignoreCancelToken },
-    urlPrefix,
   } = config;
+  console.log(config, 'interceptorsRequest');
   // 检查ignoreCancel是否存在？存在赋值，不存在去配置找
-  const ignoreCancel =
-    typeof ignoreCancelToken === 'undefined'
-      ? this.options?.request?.ignoreCancelToken
-      : ignoreCancelToken;
-  !ignoreCancel && axiosCanceler.addPending(config);
-  config.url = typeof urlPrefix === 'undefined' ? config.url : urlPrefix + config.url;
+  !ignoreCancelToken && axiosCanceler.addPending(config);
   return config;
 };

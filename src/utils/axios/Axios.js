@@ -3,7 +3,7 @@ import { interceptorsCatch, interceptorsResponse, interceptorsRequest } from './
 import { transformBeforeRequest, transformRequest } from './transform';
 import { cloneLoop } from '../index';
 export class Axios {
-  constructor(options) {
+  constructor(options = {}) {
     this.options = options;
     this.axiosInstance = axios.create(options);
     this.setupInterceptors();
@@ -74,14 +74,22 @@ export class Axios {
   }
   request(config, options) {
     let conf = cloneLoop(config);
-    let opt = Object.assign({}, options);
+    let opt = Object.assign({}, this.options, options);
     const { request, beforeRequest } = this.getTransform();
     request && (conf = transformBeforeRequest(conf, opt));
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .request(conf)
         .then((res) => {
-          beforeRequest && transformRequest(res);
+          if (beforeRequest) {
+            try {
+              const result = transformRequest(res, opt);
+              resolve(result);
+            } catch (e) {
+              reject(e || new Error('request error!', opt));
+            }
+            return;
+          }
           resolve(res);
         })
         .catch((error) => {
