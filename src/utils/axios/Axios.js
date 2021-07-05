@@ -12,6 +12,7 @@ export class Axios {
   setHeader(headers) {
     if (!this.axiosInstance) return;
     Object.assign(this.axiosInstance.defaults.headers, headers);
+    return this;
   }
   // 获取转换器参数
   getTransform() {
