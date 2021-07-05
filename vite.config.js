@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue';
 import compressPlugin from 'vite-plugin-compression';
 import { defineConfig } from 'vite';
 import html from 'vite-plugin-html';
+import legacy from '@vitejs/plugin-legacy';
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
@@ -78,6 +79,9 @@ export default defineConfig({
           BASE_URL: BASE_URL,
         },
       },
+    }),
+    legacy({
+      targets: ['> 1%', 'last 2 versions'],
     }),
   ],
 });
