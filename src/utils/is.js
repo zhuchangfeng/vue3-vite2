@@ -13,3 +13,4 @@ export const isUnDef = (val) => !isDef(val);
 export const isNull = (val) => val === null;
 export const isNullAndUnDef = (val) => isUnDef(val) && isNull(val);
 export const isNullOrUnDef = (val) => isUnDef(val) || isNull(val);
+export const isNumber = (val) => typeof val === 'number' && val === val;

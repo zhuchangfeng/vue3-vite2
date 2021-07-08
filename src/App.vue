@@ -52,6 +52,7 @@
       const tell = (msg) => {
         console.log(msg);
       };
+
       const dragleave = () => {
         console.log('dragleave');
         removeClass(dropArea.value, 'highlighted');
@@ -79,7 +80,7 @@
           console.log('dragover');
           addClass(dropArea.value, 'highlighted');
         },
-        500,
+        1200,
         { leading: true, trailing: false }
       );
       const previewImage = (file) => {
@@ -102,11 +103,14 @@
       };
       onMounted(() => {
         new To(0, 500).scrollTo();
-        createAxios({ responseData: 'default', headers: { ignoreCancelToken: true } })
-          .get({
-            url: '/uploads/album/detail',
-            params: '/22',
-          })
+        createAxios()
+          .get(
+            {
+              url: '/uploads/album/detail',
+              params: '/22',
+            },
+            { responseData: 'default', headers: { ignoreCancelToken: true } }
+          )
           .then((r) => {
             console.log(r);
           });

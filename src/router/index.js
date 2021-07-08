@@ -4,6 +4,7 @@ export const router = createRouter({
   routes: [
     { path: '/', component: () => import('@/views/home.vue') },
     { path: '/test', component: () => import('@/views/test.vue') },
+    { path: '/emits', component: () => import('@/views/emits.vue') },
   ],
   strict: true,
   scrollBehavior: () => ({ left: 0, top: 0 }),
