@@ -5,11 +5,12 @@
   {{ home }}
   {{ query }}
   <button @click="changvalue">22222</button>
+  {{ count2 }}
 </template>
 
 <script>
   import HelloWorld from '@/components/HelloWorld.vue';
-  import { reactive, toRef, toRefs, ref, onMounted, unref } from 'vue';
+  import { reactive, toRef, toRefs, ref, onMounted, unref, isRef } from 'vue';
   import { useStore } from 'vuex';
   import { useRouter, useRoute } from 'vue-router';
   export default {
@@ -20,7 +21,6 @@
     setup() {
       console.log('111');
       const root = ref(null);
-      const value = ref('');
       const route = useRoute();
       const router = useRouter();
       const store = useStore();
@@ -29,6 +29,7 @@
       let state = reactive({ count: 0 });
       let countRef = toRef(state, 'count');
       console.log(unref(countRef), 'ww');
+      console.log(isRef(countRef), '222222');
       let state2 = reactive({ count2: 0 });
       let stateAsRefs = toRefs(state2);
       let felix = reactive(store.getters['home/getTest']);
@@ -50,7 +51,6 @@
         increase,
         ...stateAsRefs,
         root,
-        value,
         msg,
         tell,
         felix,
