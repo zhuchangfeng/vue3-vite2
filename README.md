@@ -21,7 +21,7 @@ yarn lint
 see [view](https://vitejs.cn/)
 
 ### vue3
-see [view](https://vue3js.cn/docs/zh/).
+see [view](https://v3.cn.vuejs.org/).
 
 ### vue with jsx
 see [view](https://github.com/vuejs/jsx-next).
