@@ -18,8 +18,10 @@ yarn build
 yarn lint
 ```
 ### vite 
-see [view][https://vitejs.cn/]
+see [view](https://vitejs.cn/)
 
 ### vue3
-see [view][https://vue3js.cn/docs/zh/].
+see [view](https://vue3js.cn/docs/zh/).
 
+### vue with jsx
+see [view](https://github.com/vuejs/jsx-next).
