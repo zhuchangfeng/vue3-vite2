@@ -6,7 +6,9 @@ export default {
     const getArticle = () => {
       return new Promise((resolve, reject) => {
         if (Math.random() > 0.5) {
-          resolve({ title: '正确加载内容！' });
+          setTimeout(() => {
+            resolve({ title: '正确加载内容！' });
+          }, 4000);
         } else {
           reject({ msg: '呃，出了点问题~' });
         }
@@ -14,22 +16,19 @@ export default {
     };
     let { title } = await getArticle();
     const titleRef = ref(title);
-    const stopHandle = watch(titleRef, (newval, oldval) => {
-      console.log(newval);
-      console.log(oldval);
-    });
     const test = () => {
       console.log('object');
     };
-    const waittime = () =>
-      new Promise((resolve) =>
-        setTimeout(() => {
-          titleRef.value = 222;
-          resolve();
-        }, 4000)
-      );
-    await waittime();
-    stopHandle();
+    const waittime = () => {
+      watch(titleRef, (newval, oldval) => {
+        console.log(newval);
+        console.log(oldval);
+      });
+      setTimeout(() => {
+        titleRef.value = 222;
+      }, 4000);
+    };
+    waittime();
     return () => (
       <>
         <div className="info" onClick={test}>
