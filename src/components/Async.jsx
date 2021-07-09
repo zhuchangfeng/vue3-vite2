@@ -18,6 +18,9 @@ export default {
       console.log(newval);
       console.log(oldval);
     });
+    const test = () => {
+      console.log('object');
+    };
     const waittime = () =>
       new Promise((resolve) =>
         setTimeout(() => {
@@ -27,6 +30,13 @@ export default {
       );
     await waittime();
     stopHandle();
-    return () => <div className="info">{titleRef.value}</div>;
+    return () => (
+      <>
+        <div className="info" onClick={test}>
+          {titleRef.value}
+        </div>
+        <input type="text" v-model={titleRef.value}></input>
+      </>
+    );
   },
 };
