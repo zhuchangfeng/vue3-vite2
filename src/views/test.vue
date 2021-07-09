@@ -19,7 +19,7 @@
 
 <script>
   import { ref, toRef, defineAsyncComponent, onErrorCaptured, reactive } from 'vue';
-  const Async = defineAsyncComponent(() => import('@/components/Async.vue'));
+  const Async = defineAsyncComponent(() => import('@/components/Async.jsx'));
   export default {
     components: {
       Async,
@@ -34,6 +34,7 @@
 
       onErrorCaptured((e) => {
         state.errMsg = e.msg;
+        return false;
       });
 
       const add1 = () => {

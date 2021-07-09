@@ -1,6 +1,7 @@
 'use strict';
 import path from 'path';
 import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import compressPlugin from 'vite-plugin-compression';
 import { defineConfig } from 'vite';
 import html from 'vite-plugin-html';
@@ -59,6 +60,7 @@ export default defineConfig({
   },
   plugins: [
     vue(),
+    vueJsx(),
     compressPlugin({
       ext: '.gz', //gz br
       algorithm: 'gzip', //brotliCompress gzip
