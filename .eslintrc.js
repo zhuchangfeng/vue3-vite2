@@ -33,7 +33,6 @@ module.exports = {
     'no-dupe-args': 2, //函数参数不能重复
     'no-duplicate-case': 2, //switch中的case标签不能重复
     'no-func-assign': 2, //禁止重复的函数声明
-    'no-extra-parens': 2, //禁止非必要的括号
     'no-extra-semi': 2, //禁止多余的冒号
     'no-irregular-whitespace': 2, //不能有不规则的空格
     'vue/attributes-order': 'off',
