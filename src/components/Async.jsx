@@ -19,15 +19,15 @@ export default {
     const test = () => {
       console.log('object');
     };
-    const waittime = () => {
+    setTimeout(() => {
+      titleRef.value = 222;
+    }, 4000);
+    function waittime() {
       watch(titleRef, (newval, oldval) => {
         console.log(newval);
         console.log(oldval);
       });
-      setTimeout(() => {
-        titleRef.value = 222;
-      }, 4000);
-    };
+    }
     waittime();
     return () => (
       <>
