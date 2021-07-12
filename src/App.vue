@@ -31,6 +31,7 @@
   import HelloWorld from '@/components/HelloWorld.vue';
   import { reactive, toRef, toRefs, ref, onMounted } from 'vue';
   import To from '@/utils/scroll-to';
+  import SetHelper from '@/utils/aggregate';
   import { createAxios } from '@/utils/axios/index';
   import { addClass, removeClass } from '@/utils/dom';
   import { throttle } from '@/utils/index';
@@ -103,10 +104,11 @@
       };
       onMounted(() => {
         new To(0, 500).scrollTo();
+        console.log(new SetHelper([1, 2, 3, 4]).intersectionDifference(new Set([2, 3, 4, 5])));
         createAxios()
           .get(
             {
-              url: '/uploads/album/detail',
+              url: '/upload/album/detail',
               params: '/22',
             },
             { responseData: 'default', headers: { ignoreCancelToken: true } }
